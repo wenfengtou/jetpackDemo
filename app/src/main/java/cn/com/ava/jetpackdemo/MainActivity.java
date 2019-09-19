@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -20,8 +21,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        subscribe();
+        startActivity(new Intent(this, LoginActivity.class));
+       // mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+       // subscribe();
     }
 
     private void subscribe() {
