@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -11,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import cn.com.ava.jetpackdemo.databinding.FragmentLoginBinding;
 
 
 /**
@@ -68,12 +71,15 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View root = inflater.inflate(R.layout.fragment_login, container, false);
-        TextView tv = root.findViewById(R.id.tv_login);
-        tv.setOnClickListener(view -> {
+        FragmentLoginBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
+        binding.setLoginHint("heheheheheh");
+        binding.setCommand("hahahahah");
+        /*
+        binding.tvLogin.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment);
         });
-        return root;
+        */
+        return binding.getRoot();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
