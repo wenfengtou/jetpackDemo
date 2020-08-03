@@ -10,6 +10,9 @@
         <variable
             name="command"
             type="String" />
+        <variable
+            name="init"
+            type="String" />
     </data>
 
     <FrameLayout
@@ -22,6 +25,7 @@
             android:id="@+id/tv_login"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:initBindHehe="@{command}"
             app:clickCommandBind="@{command}"
             android:text="@{login_hint}" />
 

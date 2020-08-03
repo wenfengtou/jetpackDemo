@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*貌似没有什么用？，莫非是架构需要？*/
+/*可以感知生命周期，用于保存数据，例如Activity销毁的时候*/
 public class LoginViewModel extends ViewModel {
     private String mName;
     private MutableLiveData<Long> mElapsedTime = new MutableLiveData<>();
@@ -33,11 +35,11 @@ public class LoginViewModel extends ViewModel {
         return mElapsedTime;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 }
