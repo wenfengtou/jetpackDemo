@@ -4,38 +4,39 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
-import android.widget.ActionMenuView;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.com.ava.jetpackdemo.modules.login.viewmodel.LoginViewModel;
+import cn.com.ava.jetpackdemo.bean.Note;
+import cn.com.ava.jetpackdemo.databinding.ActivityMainBinding;
+import cn.com.ava.jetpackdemo.viewmodel.LoginViewModel;
+import cn.com.ava.jetpackdemo.viewmodel.NoteViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private LoginViewModel mLoginViewModel;
     private ViewModelProvider mViewModelProvider;
+
+    private NoteViewModel mNoteViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        // startActivity(new Intent(this, LoginActivity.class));
-        mViewModelProvider = ViewModelProviders.of(this);
-        mLoginViewModel = mViewModelProvider.get(LoginViewModel.class);
+       // mViewModelProvider = ViewModelProviders.of(this);
+       // mLoginViewModel = mViewModelProvider.get(LoginViewModel.class);
        // startActivity(new Intent(this, LoginActivity.class));
        // subscribe();
 
+        /*
         if (savedInstanceState != null) {
             Log.i(TAG, "销毁重建 mName=" + mLoginViewModel.getName());
         } else {
@@ -44,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
         }
         testInstance();
         testSingleLiveData();
+         */
+        mNoteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding.setNoteViewModel(mNoteViewModel);
+        binding.setLifecycleOwner(this);
+        setContentView(binding.getRoot());
+        Note note = new Note("hello", 2020);
+        mNoteViewModel.setNote(note);
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();
@@ -83,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         mSingleLiveData.observe(this, new Observer<Long>() {
             @Override
             public void onChanged(Long aLong) {
-                ((TextView) findViewById(R.id.timer_textview)).setText("test:" + aLong);
+                ((TextView) findViewById(R.id.tv_main)).setText("test:" + aLong);
             }
         });
         Timer timer = new Timer();
@@ -106,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable final Long aLong) {
                 String newText = MainActivity.this.getResources().getString(
                         R.string.seconds, aLong);
-                ((TextView) findViewById(R.id.timer_textview)).setText(newText);
+                ((TextView) findViewById(R.id.tv_main)).setText(newText);
                 Log.d("ChronoActivity3", "Updating timer");
             }
         };

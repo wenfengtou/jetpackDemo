@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.net.Uri;
 import android.os.Bundle;
 
-import cn.com.ava.jetpackdemo.modules.login.viewmodel.LoginViewModel;
+import cn.com.ava.jetpackdemo.viewmodel.LoginViewModel;
 
 import static androidx.navigation.Navigation.findNavController;
 

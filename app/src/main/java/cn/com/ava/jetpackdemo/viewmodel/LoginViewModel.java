@@ -1,4 +1,4 @@
-package cn.com.ava.jetpackdemo.modules.login.viewmodel;
+package cn.com.ava.jetpackdemo.viewmodel;
 
 import android.os.SystemClock;
 
