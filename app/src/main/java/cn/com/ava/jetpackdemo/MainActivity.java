@@ -2,6 +2,7 @@ package cn.com.ava.jetpackdemo;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -26,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private ViewModelProvider mViewModelProvider;
 
     private NoteViewModel mNoteViewModel;
+    private MutableLiveData<Note> mNoteLiveData;
+
+    private TextView mMainTextView;
+    private Note mNote;
+
+    private int mCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
        // startActivity(new Intent(this, LoginActivity.class));
        // mViewModelProvider = ViewModelProviders.of(this);
        // mLoginViewModel = mViewModelProvider.get(LoginViewModel.class);
@@ -51,8 +58,17 @@ public class MainActivity extends AppCompatActivity {
         binding.setNoteViewModel(mNoteViewModel);
         binding.setLifecycleOwner(this);
         setContentView(binding.getRoot());
-        Note note = new Note("hello", 2020);
-        mNoteViewModel.setNote(note);
+        mMainTextView = ((TextView) findViewById(R.id.tv_main));
+        mNoteLiveData = mNoteViewModel.getNoteLiveData();
+        mNote = new Note("Hi", 22);
+        mNoteLiveData.setValue(mNote);
+        mMainTextView.setOnClickListener(view -> {
+            //mNote.postValue(new Note("MNT", 200));
+            mCount++;
+            Note note = mNoteLiveData.getValue();
+            note.setAuthor("hehe");
+        });
+
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();
