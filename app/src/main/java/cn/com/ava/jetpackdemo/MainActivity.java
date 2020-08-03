@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private MutableLiveData<Note> mNoteLiveData;
 
     private TextView mMainTextView;
+    private TextView mNormalTextView;
     private Note mNote;
 
     private int mCount = 0;
@@ -59,7 +61,38 @@ public class MainActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         setContentView(binding.getRoot());
         mMainTextView = ((TextView) findViewById(R.id.tv_main));
-        mNoteLiveData = mNoteViewModel.getNoteLiveData();
+        mNoteLiveData = new MutableLiveData<>();
+        mNoteLiveData.setValue(new Note("Fuck", 22));
+        mNoteViewModel.setNoteLiveData(mNoteLiveData);
+
+
+        mMainTextView.setOnClickListener(view -> {
+            //mNote.postValue(new Note("MNT", 200));
+            mCount++;
+            mNoteLiveData.setValue(new Note("ViewModel Object LiveData:" + mCount, 22));
+            mNoteViewModel.getName().setValue("ViewModel int LiveData:" + mCount);
+            mNoteViewModel.getAge().setValue(mCount);
+            //mNoteViewModel.setNoteLiveData(mNoteLiveData);
+        });
+
+        //监听liveData变化
+        mNoteViewModel.getName().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                //Toast.makeText(MainActivity.this,"发生了改变：" + s, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*
+        mNoteViewModel.getAge().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                Toast.makeText(MainActivity.this,"发生了改变：" + integer, Toast.LENGTH_SHORT).show();
+            }
+        });
+         */
+
+        /*
         mNote = new Note("Hi", 22);
         mNoteLiveData.setValue(mNote);
         mMainTextView.setOnClickListener(view -> {
@@ -68,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
             Note note = mNoteLiveData.getValue();
             note.setAuthor("hehe");
         });
+         */
 
     }
 
