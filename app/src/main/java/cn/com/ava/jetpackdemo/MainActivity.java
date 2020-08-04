@@ -7,15 +7,23 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.com.ava.jetpackdemo.adapter.NoteAdapter;
 import cn.com.ava.jetpackdemo.bean.Note;
 import cn.com.ava.jetpackdemo.databinding.ActivityMainBinding;
 import cn.com.ava.jetpackdemo.viewmodel.LoginViewModel;
@@ -33,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView mMainTextView;
     private TextView mNormalTextView;
     private Note mNote;
+    BottomSheetDialog mBottomSheetDialog;
+    BottomSheetBehavior mBottomSheetBehavior;
 
     private int mCount = 0;
     @Override
@@ -72,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
             mNoteLiveData.setValue(new Note("ViewModel Object LiveData:" + mCount, 22));
             mNoteViewModel.getName().setValue("ViewModel int LiveData:" + mCount);
             mNoteViewModel.getAge().setValue(mCount);
+
+            mBottomSheetDialog.show();
             //mNoteViewModel.setNoteLiveData(mNoteLiveData);
         });
 
@@ -103,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         });
          */
 
+        initBottomSheetDialog();
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();
@@ -113,6 +126,68 @@ public class MainActivity extends AppCompatActivity {
 
     class Woman extends Human {
 
+    }
+
+    private NoteAdapter mNoteAdapter;
+    private void initBottomSheetDialog() {
+        View view = View.inflate(MainActivity.this, R.layout.note_main, null);
+
+        RecyclerView noteRecyclerView = view.findViewById(R.id.rv_note);
+        mNoteAdapter = new NoteAdapter();
+        noteRecyclerView.setAdapter(mNoteAdapter);
+        noteRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        mNoteAdapter.setNoteList(fetchNoteList());
+        mBottomSheetDialog = new BottomSheetDialog(MainActivity.this);
+        mBottomSheetDialog.setContentView(view);
+        mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
+        mBottomSheetBehavior.setPeekHeight(300);
+    }
+
+
+    private ArrayList<Note> fetchNoteList() {
+        ArrayList<Note> noteList = new ArrayList<>();
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        noteList.add(new Note("1", 1));
+        return noteList;
+    }
+
+    protected int getPeekHeight() {
+        int peekHeight = getResources().getDisplayMetrics().heightPixels;
+        //设置弹窗高度为屏幕高度的3/4
+        return peekHeight - peekHeight / 3;
     }
 
     private void testInstance() {
@@ -169,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("ChronoActivity3", "Updating timer");
             }
         };
-        //
+
         mLoginViewModel.getElapsedTime().observe(this, elapsedTimeObserver);
     }
 }
