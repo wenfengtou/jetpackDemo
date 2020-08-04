@@ -1,5 +1,6 @@
 package cn.com.ava.jetpackdemo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -23,9 +24,12 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 import cn.com.ava.jetpackdemo.adapter.NoteAdapter;
 import cn.com.ava.jetpackdemo.bean.Note;
 import cn.com.ava.jetpackdemo.databinding.ActivityMainBinding;
+import cn.com.ava.jetpackdemo.di.DaggerNoteComponent;
 import cn.com.ava.jetpackdemo.viewmodel.LoginViewModel;
 import cn.com.ava.jetpackdemo.viewmodel.NoteViewModel;
 
@@ -43,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Note mNote;
     BottomSheetDialog mBottomSheetDialog;
     BottomSheetBehavior mBottomSheetBehavior;
+
+
+    @Inject
+    public Note mInjectNote;
 
     private int mCount = 0;
     @Override
@@ -84,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
             mNoteViewModel.getAge().setValue(mCount);
 
             mBottomSheetDialog.show();
+
+            Toast.makeText(this, "mInjectNote=" + mInjectNote, Toast.LENGTH_SHORT).show();
+
             //mNoteViewModel.setNoteLiveData(mNoteLiveData);
         });
 
@@ -116,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
          */
 
         initBottomSheetDialog();
+
+        //test Dagger
+        DaggerNoteComponent.create().inject(this);
+
+
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();
@@ -139,8 +155,24 @@ public class MainActivity extends AppCompatActivity {
         mNoteAdapter.setNoteList(fetchNoteList());
         mBottomSheetDialog = new BottomSheetDialog(MainActivity.this);
         mBottomSheetDialog.setContentView(view);
+
         mBottomSheetBehavior = BottomSheetBehavior.from((View) view.getParent());
         mBottomSheetBehavior.setPeekHeight(300);
+
+        mBottomSheetBehavior.setHideable(false);
+
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int newState) {
+                Log.i(TAG, "onStateChanged:" + newState);
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                Log.i(TAG, "onSlide");
+            }
+        });
     }
 
 
