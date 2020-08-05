@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public String mActivityName;
 
+    @Inject
+    public int mActivityId;
+
     private int mCount = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             mBottomSheetDialog.show();
 
             //Toast.makeText(this, "mInjectNote=" + mInjectNote, Toast.LENGTH_SHORT).show();
-            Toast.makeText(this, "mActivityName=" + mActivityName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "mActivityName=" + mActivityName + " " + mActivityId, Toast.LENGTH_SHORT).show();
 
             //mNoteViewModel.setNoteLiveData(mNoteLiveData);
         });
@@ -138,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
         //test Dagger
         //DaggerNoteComponent.create().inject(this);
-        startActivity(new Intent(this, LoginActivity.class));
+        //startActivity(new Intent(this, LoginActivity.class));
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();

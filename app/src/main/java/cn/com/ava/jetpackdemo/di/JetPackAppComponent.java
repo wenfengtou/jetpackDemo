@@ -9,7 +9,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidInjectionModule.class,
         AndroidSupportInjectionModule.class,
         JetPackAppModule.class,
-        MainActivityModule.class,
+        AllActivityModule.class,
 })
 public interface JetPackAppComponent {
     void inject(JetPackApplication application);
