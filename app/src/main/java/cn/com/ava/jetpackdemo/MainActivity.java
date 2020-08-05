@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ import cn.com.ava.jetpackdemo.databinding.ActivityMainBinding;
 import cn.com.ava.jetpackdemo.di.DaggerNoteComponent;
 import cn.com.ava.jetpackdemo.viewmodel.LoginViewModel;
 import cn.com.ava.jetpackdemo.viewmodel.NoteViewModel;
+import dagger.android.AndroidInjection;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,8 +51,11 @@ public class MainActivity extends AppCompatActivity {
     BottomSheetBehavior mBottomSheetBehavior;
 
 
+    //@Inject
+    //public Note mInjectNote;
+
     @Inject
-    public Note mInjectNote;
+    public String mActivityName;
 
     private int mCount = 0;
     @Override
@@ -93,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
             mBottomSheetDialog.show();
 
-            Toast.makeText(this, "mInjectNote=" + mInjectNote, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "mInjectNote=" + mInjectNote, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "mActivityName=" + mActivityName, Toast.LENGTH_SHORT).show();
 
             //mNoteViewModel.setNoteLiveData(mNoteLiveData);
         });
@@ -128,10 +134,11 @@ public class MainActivity extends AppCompatActivity {
 
         initBottomSheetDialog();
 
+        //Android 四大组件inject
+        AndroidInjection.inject(this);
         //test Dagger
-        DaggerNoteComponent.create().inject(this);
-
-
+        //DaggerNoteComponent.create().inject(this);
+        startActivity(new Intent(this, LoginActivity.class));
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();
