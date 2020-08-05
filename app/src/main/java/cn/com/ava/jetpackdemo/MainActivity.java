@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Note mNote;
     BottomSheetDialog mBottomSheetDialog;
     BottomSheetBehavior mBottomSheetBehavior;
+    private NoteAdapter mNoteAdapter;
 
 
     //@Inject
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
         AndroidInjection.inject(this);
         //test Dagger
         //DaggerNoteComponent.create().inject(this);
-        //startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, SettingActivity.class));
     }
 
     private MutableLiveData<Long> mSingleLiveData = new MutableLiveData<>();
@@ -154,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private NoteAdapter mNoteAdapter;
     private void initBottomSheetDialog() {
         View view = View.inflate(MainActivity.this, R.layout.note_main, null);
 
