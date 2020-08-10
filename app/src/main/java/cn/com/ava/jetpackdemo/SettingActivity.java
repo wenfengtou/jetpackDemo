@@ -29,8 +29,8 @@ public class SettingActivity extends FragmentActivity {
          */
 
 
-        noteFragment = new NoteFragment();
-        noteFragment.show(getSupportFragmentManager(),"nav_topic");
+        //noteFragment = new NoteFragment();
+        //noteFragment.show(getSupportFragmentManager(),"nav_topic");
 
 
     }
