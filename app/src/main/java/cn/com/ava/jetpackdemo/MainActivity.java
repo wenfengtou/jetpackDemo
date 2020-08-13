@@ -26,6 +26,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import cn.com.ava.jetpackdemo.adapter.NoteAdapter;
 import cn.com.ava.jetpackdemo.bean.Note;
@@ -52,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
     private NoteAdapter mNoteAdapter;
 
 
-    //@Inject
-    //public Note mInjectNote;
+    @Inject
+    public Note mInjectNote;
 
+    @Named("MainActivitySimpleName")
     @Inject
     public String mActivityName;
 
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Android 四大组件inject
         AndroidInjection.inject(this);
+        Log.i(TAG, "mActivityName=" + mActivityName + " mInjectNote" + mInjectNote);
         //test Dagger
         //DaggerNoteComponent.create().inject(this);
         startActivity(new Intent(this, SettingActivity.class));

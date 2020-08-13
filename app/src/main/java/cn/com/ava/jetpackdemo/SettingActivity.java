@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import cn.com.ava.jetpackdemo.bean.User;
 import cn.com.ava.jetpackdemo.di.DaggerNoteComponent;
+import cn.com.ava.jetpackdemo.di.NoteModule;
 
 public class SettingActivity extends FragmentActivity {
 
@@ -21,7 +22,8 @@ public class SettingActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-        DaggerNoteComponent.create().inject(this);
+        //DaggerNoteComponent.create().inject(this);
+        DaggerNoteComponent.builder().noteModule(new NoteModule()).build().inject(this);
         Log.i("fengtou","user name=" + mUser.name);
 
         /*

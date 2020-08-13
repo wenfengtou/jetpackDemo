@@ -2,6 +2,8 @@ package cn.com.ava.jetpackdemo.di;
 
 import android.app.Activity;
 
+import javax.inject.Named;
+
 import cn.com.ava.jetpackdemo.MainActivity;
 import dagger.Binds;
 import dagger.Module;
@@ -13,9 +15,16 @@ import dagger.multibindings.IntoMap;
 @Module
 public class MainActivityModule {
 
+    @Named("MainActivityName")
     @Provides
     String provideName() {
         return MainActivity.class.getName();
+    }
+
+    @Named("MainActivitySimpleName")
+    @Provides
+    String provideSimpleName() {
+        return MainActivity.class.getSimpleName();
     }
 
     @Provides

@@ -13,7 +13,7 @@ import dagger.multibindings.IntoMap;
 public abstract class AllActivityModule {
 
 
-    @ContributesAndroidInjector(modules = MainActivityModule.class)
+    @ContributesAndroidInjector(modules = {MainActivityModule.class, NoteModule.class})
     abstract MainActivity contributeMainActivityInjector();
 
     //@ContributesAndroidInjector(modules = SecondActivityModule.class)
